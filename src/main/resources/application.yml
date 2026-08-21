@@ -12,6 +12,7 @@ spring:
     driver-class-name: org.postgresql.Driver
 
   jpa:
+    defer-datasource-initialization: true # ⭐ Libera a execução do import.sql após a criação/atualização das tabelas
     hibernate:
       ddl-auto: update
     show-sql: true
@@ -25,7 +26,7 @@ api:
     token:
       secret: ${JWT_SECRET:fieldops_secret_key_para_desenvolvimento_123456789}
 
-# ⭐ Configurações do Swagger/OpenAPI (tudo junto aqui)
+# ⭐ Configurações do Swagger/OpenAPI
 springdoc:
   api-docs:
     path: /v3/api-docs
