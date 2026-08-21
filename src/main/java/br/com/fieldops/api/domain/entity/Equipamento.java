@@ -5,17 +5,19 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "equipamentos")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cliente {
+public class Equipamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,14 +26,16 @@ public class Cliente {
     @Column(nullable = false, length = 150)
     private String nome;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private String cnpj;
+    @Column(name = "numero_serie", nullable = false, unique = true, length = 100)
+    private String numeroSerie;
+
+    @Column(length = 100)
+    private String tipo;
 
     @Column(nullable = false)
     private Boolean ativo = true;
 
-    // Método auxiliar para responder ao DTO sem exigir a coluna razao_social no banco
-    public String getRazaoSocial() {
-        return this.nome;
-    }
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "local_id", nullable = false)
+    private Local local;
 }
